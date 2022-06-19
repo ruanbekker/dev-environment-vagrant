@@ -1,0 +1,15 @@
+---
+- hosts: sektor
+  name: basic playbook
+  vars:
+    dummy_key: dummy-value
+  tasks:
+  - name: Install apt packages
+    apt:
+      name: "{{ item }}"
+      state: latest
+      update_cache: yes
+    with_items:
+      - tar
+      - unzip
+

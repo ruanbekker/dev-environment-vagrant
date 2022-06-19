@@ -22,14 +22,15 @@ Vagrant.configure("2") do |config|
   SHELL
 
   config.vm.provision "docker" do |d|
-    d.run "nginx", image: "nginx:stable",
-      args: "-p 8080:80"
+    d.run "linux-dash", image: "imightbebob/linux-dash:x86",
+      args: "-p 8080:8080"
   end
 
   # Ansible provisioner
   config.vm.provision "ansible" do |ansible|
     ansible.compatibility_mode = "2.0"
     ansible.playbook = "ansible/playbook.yml"
+    # ansible.playbook = "ansible/playbook-no-roles.yml"
     ansible.inventory_path = "ansible/inventory"
     ansible.become = true
   end
