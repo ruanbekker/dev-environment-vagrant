@@ -1,0 +1,30 @@
+server {
+    listen 80;
+    server_name {{ nginx_server_name }};
+    root {{ nginx_web_root }};
+
+    index index.html;
+    charset utf-8;
+
+    location / {
+        try_files $uri $uri/ /index.html$is_args$args;
+    }
+
+    location = /favicon.ico { 
+        access_log off; 
+        log_not_found off; 
+    }
+    
+    location = /robots.txt  { 
+        access_log off; 
+        log_not_found off; 
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}

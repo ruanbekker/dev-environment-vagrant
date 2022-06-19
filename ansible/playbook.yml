@@ -1,0 +1,9 @@
+---
+- name: my-playbook
+  hosts: sektor
+  become: yes
+  become_user: root
+  roles:
+    - { role: ./roles/website }
+      
+

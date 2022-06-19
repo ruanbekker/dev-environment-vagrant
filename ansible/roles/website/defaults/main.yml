@@ -1,0 +1,21 @@
+---
+# defaults file for website
+nginx_remove_default_vhost: true
+nginx_default_vhost_path: /etc/nginx/sites-enabled/default
+nginx_vhost_path: /etc/nginx/sites-enabled
+nginx_conf_path: /etc/nginx/conf.d
+nginx_log_path: /var/log/nginx
+nginx_access_log_filename: access
+nginx_error_log_filename: error
+nginx_server_name: "_"
+nginx_user: "www-data"
+nginx_web_root: "/var/www/app"
+root_group: "root"
+webpage_title: "hello world"
+webpage_text: "homepage"
+webpage_url: "https://ruan.dev"
+access_log_args: "main buffer=16k flush=2m"
+nginx_log_format: |-
+  '$remote_addr - $remote_user [$time_local] "$request" '
+  '$status $body_bytes_sent "$http_referer" '
+  '"$http_user_agent" "$http_x_forwarded_for"'

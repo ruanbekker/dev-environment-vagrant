@@ -1,0 +1,13 @@
+---
+# tasks file for website
+- include_tasks: setup-ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+# vhost configuration.
+- import_tasks: configuration.yml
+
+- name: Ensure nginx service is running as configured.
+  service:
+    name: nginx
+    state: started
+    enabled: true

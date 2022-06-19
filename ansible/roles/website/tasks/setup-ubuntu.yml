@@ -1,0 +1,8 @@
+---
+- name: Ensure dirmngr and nginx is installed
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - dirmngr
+    - nginx 

@@ -1,0 +1,59 @@
+---
+- name: Copy nginx configuration in place.
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: "{{ root_group }}"
+    mode: 0644
+  notify:
+    - reload nginx
+
+- name: Remove default nginx vhost config file (if configured).
+  file:
+    path: "{{ nginx_default_vhost_path }}"
+    state: absent
+  when: nginx_remove_default_vhost | bool
+  notify: restart nginx
+
+- name: Ensure nginx_web_root exists.
+  file:
+    path: "{{ nginx_web_root }}"
+    state: directory
+    mode: 0755
+  notify: reload nginx
+
+- name: Ensure nginx_web_root exists.
+  file:
+    path: "{{ nginx_web_root }}"
+    state: directory
+    mode: 0755
+  notify: reload nginx
+
+- name: copy promtail systemd unit
+  copy:
+    src: styles.css
+    dest: "{{ nginx_web_root }}/styles.css"
+    owner: root
+    group: "{{ root_group }}"
+    mode: 0644
+  notify: reload nginx
+
+- name: Add website files
+  template:
+    src: index.html.j2
+    dest: "{{ nginx_web_root }}/index.html"
+    owner: root
+    group: "{{ root_group }}"
+    mode: 0644
+  notify: reload nginx
+
+- name: Add managed vhost config files.
+  template:
+    src: app.conf.j2
+    dest: "{{ nginx_conf_path }}/app.conf"
+    force: true
+    owner: root
+    group: "{{ root_group }}"
+    mode: 0644
+  notify: reload nginx
