@@ -118,6 +118,41 @@ The deployed docker container can be accessed on:
 The deployed website via ansible can be accessed on:
 - http://192.168.33.23:8080/
 
+## Customization
+
+Changing the shell provisioner is done on line [19-22](Vagrantfile#L19-L22):
+
+```ruby
+  config.vm.provision "shell", inline: <<-SHELL
+    apt update
+    apt install curl git cmake vim -y
+  SHELL
+```
+
+Changing the docker provisioner is done on line [24-27](Vagrantfile#L24-L27):
+
+```ruby
+  config.vm.provision "docker" do |d|
+    d.run "linux-dash", image: "imightbebob/linux-dash:x86",
+      args: "-p 8080:8080 -v '/:/rootfs:ro' -v '/sys:/host/sys:ro' -v '/proc:/host/proc:ro' -v '/var/run/docker.sock:/var/run/docker.sock' --privileged"
+  end
+```
+
+Changing the ansible provisioner is done on line [30-36](Vagrantfile#L30-L36):
+
+```ruby
+  config.vm.provision "ansible" do |ansible|
+    ansible.compatibility_mode = "2.0"
+    ansible.playbook = "ansible/playbook.yml"
+    ansible.inventory_path = "ansible/inventory"
+    ansible.become = true
+  end
+```
+
+The `ansible/playbook.yml` references a role, which can be found in `ansible/roles/` and the tasks being actioned is within the tasks directory `ansible/roles/website/tasks/main.yml`. 
+
+For a simple playbook without roles, you can reference `ansible/playbook-no-roles.yml`
+
 ## Resources
 
 - https://github.com/AntonyLeons/Ward
