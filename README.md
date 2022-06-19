@@ -20,7 +20,13 @@ git clone https://github.com/ruanbekker/dev-environment-vagrant
 cd dev-environment-vagrant
 ```
 
-Install vagrant by following their [installation documentation](https://www.vagrantup.com/docs/installation), then boot the environment using:
+Install vagrant by following their [installation documentation](https://www.vagrantup.com/docs/installation), then install the vbguest plugin:
+
+```bash
+vagrant plugin install vagrant-vbguest
+```
+
+then boot the environment using:
 
 ```bash
 vagrant up
