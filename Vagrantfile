@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "docker" do |d|
     d.run "linux-dash", image: "imightbebob/linux-dash:x86",
-      args: "-p 8080:8080"
+      args: "-p 8080:8080 -v '/:/rootfs:ro' -v '/sys:/host/sys:ro' -v '/proc:/host/proc:ro' -v '/var/run/docker.sock:/var/run/docker.sock' --privileged"
   end
 
   # Ansible provisioner
